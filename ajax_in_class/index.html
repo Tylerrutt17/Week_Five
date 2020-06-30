@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>XMLHttpRequest</title>
+</head>
+<body>
+    <script>
+        
+        console.log('updated2')
+
+        const request = new XMLHttpRequest();
+        
+        request.onreadystatechange = () => {
+            if (request.readyState === 4 && request.status === 200) {
+                let names = JSON.parse(request.response)
+                console.log(names)
+                
+                let doc = document.querySelector("body")
+
+                names.forEach(name => {
+                    let list = document.createElement("UL")
+                    list.innerText = name.name
+
+                    let eye_color = document.createElement('li')
+                    eye_color.innerText = name.eye_color
+
+                    let height = document.createElement('li')
+                    height.innerText = name.height
+
+                    let mass = document.createElement('li')
+                    mass.innerText = name.mass
+
+                    document.body.append(list)
+                    list.appendChild(eye_color)
+                    list.append(height)
+                    list.append(mass)
+                });
+            };
+        };
+
+         request.open("GET", "./starwars_names.json")
+         request.send();
+
+
+        // const ajax = (url, callback) => {
+        //     const request = new XMLHttpRequest();
+
+        //     request.onreadystatechange =() => {
+        //         if (request.readyState === 4 && request.status  === 200) {
+        //             callback(request.response)
+        //         }
+        //     };
+        //     request.open("GET", url)
+        //     request.send();
+            
+        //     ajax("./names.json", (resp)=>console.log(JSON.parse(resp)))
+        // }
+        
+        // const getPeople = (page = 1) => {
+        //     ajax('https://swapi.dev/api/people/?page=${page}', response=>console.log(JSON.parse(response)))
+        // }
+        // getPeople(3)
+
+    </script>
+    
+</body>
+</html>
